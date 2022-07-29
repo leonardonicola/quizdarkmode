@@ -1,7 +1,7 @@
 # Quiz Dark Mode :dart:
 
 <h3>Projeto em Vue :rocket:	</h3>
-<p>Quiz Dark Mode é um projeto simples com intuito de fazer um quiz totalmente em Javascript com opção de toggle Dark Mode</p>
+<p>Quiz Dark Mode é um projeto simples com intuito de fazer um quiz totalmente em Javascript com opção de toggle Dark Mode.</p>
 
 </br>
 
