@@ -2,11 +2,10 @@
   <div ref="app" class="app">
     <label class="switch">
     <input type="checkbox" 
-    v-model="toggle"
-    >
+    v-model="toggle"/>
       <span class="slider round"></span>
     </label>  
-    <Perguntas :toggle="toggle"/>
+    <Perguntas :toggle="toggle" :perguntas="perguntas"/>
   </div>
 </template>
 
@@ -16,7 +15,36 @@ export default {
   components:{Perguntas},
   data(){
     return{
-      toggle: false
+      toggle: false,
+      perguntas:[
+          {
+              title:"O que é o Vue?",
+              opcoes:[ 
+              {opcao:"Lib"},
+              {opcao: "Framework Front-End", correta:true},
+              {opcao: "Plugin JS"},
+              {opcao: "Preselector CSS"}
+              ]
+          },
+          {
+              title:"O que é HTML",
+              opcoes:[
+              {opcao: "Framework"},
+              {opcao:"Linguagem de marcação", correta:true},
+              {opcao: "Linguagem de programação"},
+              {opcao: "Metodologia ágil"}
+              ]
+          },
+          {
+              title:"O que é JavaScript",
+              opcoes:[
+              {opcao: "Framework Back-End"},
+              {opcao:"Preseletor CSS" },
+              {opcao: "Linguagem de programação", correta:true},
+              {opcao: "Biblioteca do Java"}
+              ]
+          }
+          ]
     }
   },
   watch:{

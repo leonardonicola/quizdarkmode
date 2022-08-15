@@ -1,9 +1,9 @@
 <template>
     <div class="main">
-        <div v-for="pergunta in perguntas.slice(n, n+1)" :key="pergunta" 
-        class="main__quiz" :class="toggle ? 'dark':''" >
+        <div v-for="(pergunta, index) in perguntas.slice(n, n+1)" :key="index" 
+        class="main__quiz" :class="{dark: toggle}" >
 
-            <div  class="main__container-header" :class="toggle ? 'darkHeader' : ''">
+            <div  class="main__container-header" :class="{darkHeader: toggle}">
                 <h1 id="title">{{pergunta.title}}</h1>
             </div>
 
@@ -11,7 +11,7 @@
 
             <ul class="main__opcoes">
                 <li v-for="(opc,index) in pergunta.opcoes" :key="index" 
-                @click="selecionarOpcao(opc)"
+                @click.stop="selecionarOpcao(opc)"
                 :class="respondida ? check(opc) : ''"
                 >{{opc.opcao}}</li>
             </ul>
@@ -19,52 +19,32 @@
         </div>
 
         <button v-if="n < perguntas.length-1" @click="next" 
-        :disabled="!respondida" class="main__btn" :class="toggle ? 'dark':''">PRÓXIMA</button>
-
-        <button v-if="n == perguntas.length-1" @click="finalizar" 
-        :disabled="!respondida" class="main__btn" :class="toggle ? 'dark':''">FINALIZAR</button>
+        :disabled="!respondida" class="main__btn" :class="{dark: toggle}">PRÓXIMA</button>
         
-        <div v-if="scoreshow" class="resultado">
-            <h1 :class="toggle ? 'darkTitle':''">SEU SCORE: {{score}}/{{perguntas.length}}</h1>
-            <button @click="restart" class="main__btn" :class="toggle ? 'dark':''">REINICIAR</button>
+        <div v-else-if="scoreshow" class="resultado">
+            <h1 :class="{darkTitle: toggle}">SEU SCORE: {{score}}/{{perguntas.length}}</h1>
+            <button @click="restart" class="main__btn" :class="{dark: toggle}">REINICIAR</button>
         </div>
+
+        <button v-else @click="finalizar" 
+        :disabled="!respondida" class="main__btn" :class="{dark: toggle}">FINALIZAR</button>
     </div>
 </template>
 
 <script>
 export default {
-    props:{toggle: Boolean},
+    props:{
+        toggle: {
+            type: Boolean, 
+            required: true
+        },
+        perguntas: {
+            type: Array,
+            required: true
+        }
+    },
     data(){
         return{
-            perguntas:[
-                {
-                    title:"O que é o Vue?",
-                    opcoes:[ 
-                    {opcao:"Lib"},
-                    {opcao: "Framework Front-End", correta:true},
-                    {opcao: "Plugin JS"},
-                    {opcao: "Preselector CSS"}
-                    ]
-                },
-                {
-                    title:"O que é HTML",
-                    opcoes:[
-                    {opcao: "Framework"},
-                    {opcao:"Linguagem de marcação", correta:true},
-                    {opcao: "Linguagem de programação"},
-                    {opcao: "Metodologia ágil"}
-                    ]
-                },
-                {
-                    title:"O que é JavaScript",
-                    opcoes:[
-                    {opcao: "Framework Back-End"},
-                    {opcao:"Preseletor CSS" },
-                    {opcao: "Linguagem de programação", correta:true},
-                    {opcao: "Biblioteca do Java"}
-                    ]
-                }
-            ],
             n:0,
             score:0,
             respondida: false,
