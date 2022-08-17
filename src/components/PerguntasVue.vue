@@ -19,15 +19,15 @@
         </div>
 
         <button v-if="n < perguntas.length-1" @click="next" 
-        :disabled="!respondida" class="main__btn" :class="{dark: toggle}">PRÓXIMA</button>
+        :disabled="!respondida" :class="{dark: toggle}">PRÓXIMA</button>
         
         <div v-else-if="scoreshow" class="resultado">
             <h1 :class="{darkTitle: toggle}">SEU SCORE: {{score}}/{{perguntas.length}}</h1>
-            <button @click="restart" class="main__btn" :class="{dark: toggle}">REINICIAR</button>
+            <button @click="restart" :class="{dark: toggle}">REINICIAR</button>
         </div>
 
         <button v-else @click="finalizar" 
-        :disabled="!respondida" class="main__btn" :class="{dark: toggle}">FINALIZAR</button>
+        :disabled="!respondida" :class="{dark: toggle}">FINALIZAR</button>
     </div>
 </template>
 
@@ -56,11 +56,9 @@ export default {
         selecionarOpcao(opc){
             switch(this.respondida){
                 case false:
+                    this.respondida = true
                     if(opc.correta){
                         this.score++
-                        this.respondida = true
-                    }else{
-                        this.respondida = true
                     }
                     break;
                 case true:
@@ -192,7 +190,7 @@ li.incorreta {
     background-color: rgb(240, 117, 100);
 }
 
-.main__btn{
+button{
     width: fit-content;
     height: 35px;
     margin-bottom: 10px;
@@ -206,13 +204,9 @@ li.incorreta {
     background-color: #535353f5;
 }
 
-.main__btn:hover{
+button:hover{
     background-color: rgb(46, 46, 46);
     transform: scale(1.05);
-}
-
-.check {
-    color: rgb(74, 219, 74);
 }
 
 .resultado{
