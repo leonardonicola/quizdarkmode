@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-for="(pergunta, index) in perguntas.slice(n, n+1)" :key="index" 
+        <div v-for="(pergunta, index) in questions" :key="index" 
         class="main__quiz" :class="{dark: toggle}" >
 
             <div  class="main__container-header" :class="{darkHeader: toggle}">
@@ -54,23 +54,10 @@ export default {
     methods:{
         
         selecionarOpcao(opc){
-            switch(this.respondida){
-                case false:
-                    this.respondida = true
-                    if(opc.correta){
-                        this.score++
-                    }
-                    break;
-                case true:
-                    break;
-            }
+            this.respondida ? '':(this.respondida = true, opc.correta ? this.score++ : null )
         },
         check(opc){
-            if(opc.correta){
-                return 'correta'
-            }else{
-                return 'incorreta'
-            }
+            return opc.correta ? 'correta' : 'incorreta'
         },
         next(){
             this.n++
@@ -82,6 +69,11 @@ export default {
         },
         restart(){
             Object.assign(this.$data, this.$options.data())
+        }
+    },
+    computed:{
+        questions(){
+            return this.perguntas.slice(this.n, this.n+1)
         }
     }
 }
